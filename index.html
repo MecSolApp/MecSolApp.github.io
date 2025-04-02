@@ -5,8 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gráfico Interativo</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="example1.html">Sobre</a></li>
+        </ul>
+    </nav>
+    
     <h2>Digite valores para x (separados por vírgula)</h2>
     <input type="text" id="xValues" placeholder="Ex: 1,2,3,4,5">
     <button onclick="plotGraph()">Plotar</button>
