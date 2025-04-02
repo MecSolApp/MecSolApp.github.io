@@ -1,46 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gráfico Interativo</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="styles.css">
-</head>
+
+<html>
 <body>
+
     <nav>
         <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="example1.html">Sobre</a></li>
         </ul>
     </nav>
-    
-    <h2>Digite valores para x (separados por vírgula)</h2>
-    <input type="text" id="xValues" placeholder="Ex: 1,2,3,4,5">
-    <button onclick="plotGraph()">Plotar</button>
-    <canvas id="myChart" width="400" height="200"></canvas>
+	
+</body>
 
-    <script>
-        function plotGraph() {
-            let xInput = document.getElementById("xValues").value;
-            let xValues = xInput.split(",").map(Number);
-            let yValues = xValues.map(x => x * x); // Função quadrática como exemplo
 
-            let ctx = document.getElementById("myChart").getContext("2d");
-            if (window.myChart) window.myChart.destroy();
-            window.myChart = new Chart(ctx, {
-                type: "line",
-                data: {
-                    labels: xValues,
-                    datasets: [{
-                        label: "y = x²",
-                        data: yValues,
-                        borderColor: "blue",
-                        fill: false
-                    }]
-                }
-            });
-        }
-    </script>
+<head>
+	<script type="text/javascript">
+	window.onload = function () {
+
+      var dps = [{x: 1, y: 10}, {x: 2, y: 13}, {x: 3, y: 18}, {x: 4, y: 20}, {x: 5, y: 17},{x: 6, y: 10}, {x: 7, y: 13}, {x: 8, y: 18}, {x: 9, y: 20}, {x: 10, y: 17}];   //dataPoints. 
+
+      var chart = new CanvasJS.Chart("chartContainer",{
+      	title :{
+      		text: "Live Data"
+      	},
+      	axisX: {						
+      		title: "Axis X Title"
+      	},
+      	axisY: {						
+      		title: "Units"
+      	},
+      	data: [{
+      		type: "line",
+      		dataPoints : dps
+      	}]
+      });
+
+      chart.render();
+      var xVal = dps.length + 1;
+      var yVal = 15;	
+      var updateInterval = 1000;
+
+      var updateChart = function () {
+      	
+      	
+      	yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+      	dps.push({x: xVal,y: yVal});
+      	
+      	xVal++;
+      	if (dps.length >  10 )
+      	{
+      		dps.shift();				
+      	}
+
+      	chart.render();		
+
+	// update chart after specified time. 
+
+};
+
+setInterval(function(){updateChart()}, updateInterval); 
+}
+</script>
+<script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+</head>
+<body>
+	<div id="chartContainer" style="height: 300px; width: 300px;">
+	</div>
 </body>
 </html>
