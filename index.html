@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico Interativo</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h2>Digite valores para x (separados por vírgula)</h2>
+    <input type="text" id="xValues" placeholder="Ex: 1,2,3,4,5">
+    <button onclick="plotGraph()">Plotar</button>
+    <canvas id="myChart" width="400" height="200"></canvas>
+
+    <script>
+        function plotGraph() {
+            let xInput = document.getElementById("xValues").value;
+            let xValues = xInput.split(",").map(Number);
+            let yValues = xValues.map(x => x * x); // Função quadrática como exemplo
+
+            let ctx = document.getElementById("myChart").getContext("2d");
+            if (window.myChart) window.myChart.destroy();
+            window.myChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        label: "y = x²",
+                        data: yValues,
+                        borderColor: "blue",
+                        fill: false
+                    }]
+                }
+            });
+        }
+    </script>
+</body>
+</html>
