@@ -49,9 +49,3 @@ header h2 {
 .center {
     text-align: center;
 }
-
-@media (max-width: 600px) {
-  mjx-container[jax="SVG"] {
-    font-size: 180%; /* aumenta no celular */
-  }
-}
