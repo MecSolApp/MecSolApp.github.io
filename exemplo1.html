@@ -22,18 +22,264 @@
     </nav>
 
     <main>
-        <h2>Tubo de parede grossa:</h2>
+        <h2>Tubo de parede grossa</h2>
+
+        <p>Neste exemplo é apresentado a solução das equações da elasticidade para um cilindro de paredes grossas.</p>
+
+        <h3>Equações de governo</h3>
 
         <p>
-            ...
+            <b>Dados:</b> \( \cal B \), \(\lambda\), \(G\), \(\mathbf{b}\), \(\mathbf{s}\) e \(\bar{\mathbf{u}}\).
         </p>
+        <p>
+            <b>Encontrar:</b> \(\mathbf{u}\), \(\mathbf{E}\) e \(\mathbf{T}\), tal que:
+        </p>
+        
+        <ul>
+            <li> Balanço de força: </li>
+        
+            \[
+                \mbox{div}\mathbf{T} + \mathbf{b} = \mathbf{0}
+            \]
 
-        <p> inline equations \(a = b^2\)</p>
+            <li> Equação constitutiva: </li>
 
-        \[ 
-            E = mc^2 
+            \[
+            \mathbf{T} = \lambda(\mbox{tr}\mathbf{E})\, \mathbf{I} + 2 G\mathbf{E}
+            \]
+
+            <li> Relação entre deslocamento e deformação: </li>
+
+            \[
+            \mathbf{E}= \frac{\nabla \mathbf{u}+ \nabla \mathbf{u}^\top }{2}
+            \]
+
+            <li> Condições de contorno: </li>
+            
+            \[
+                \left\{
+                \begin{array}{lcr}
+                \mathbf{T}\mathbf{n}=\mathbf{s} \quad\mbox{em}\quad \partial_s{\cal B} \cr
+                \mathbf{u} = \bar{\mathbf{u}}  \quad\mbox{em}\quad \partial_u{\cal B}
+                \end{array}
+                \right.
+            \]
+
+            <ul>
+                <li>\( \partial_s{\cal B} \): parte do contorno de ${\cal B}$ onde o vetor tensão é prescrito</li>
+                <li>\( \partial_u{\cal B} \): parte do contorno de ${\cal B}$ onde o deslocamento é prescrito</li>
+            </ul>
+        </ul>
+
+        <h3>Sistema de coordenadas cilíndricas</h3>
+       
+        <ul>
+            <li> Origem \(\mathbf{o}\) </li>
+
+            <li> Base ortonormal móvel \( \{\mathbf{e}_r, \mathbf{e}_\theta,\mathbf{e}_z\} \) </li>
+
+            <li> Coordenadas de ponto \( \mathbf{x} \) </li>
+                
+            <li> Sistema de coordenadas cartesiano com o origem \(\mathbf{o}\): \( (x,y,z) \) </li>
+                
+            <li> Sistema de coordenadas cilíndrico em questão: </li>
+
+            \[
+                (r,\theta,z), \quad\mbox{onde} \quad \left\{
+                \begin{array}{lcr}
+                x = r \cos\theta  \cr
+                y = r \sin\theta
+                \end{array}
+                \right.
+            \]
+
+            <li> Campo  de deslocamentos </li> 
+            
+            \[
+                \mathbf{u}(\mathbf{x}) = u_r(r,\theta,z) \mathbf{e}_r + u_\theta(r,\theta,z) \mathbf{e}_\theta + u_z(r,\theta,z) \mathbf{e}_z
+            \]
+
+            <li> Força de corpo por unidade de volume </li> 
+
+            \[
+                \mathbf{b}(\mathbf{x}) = b_r(r,\theta,z) \mathbf{e}_r + b_\theta(r,\theta,z) \mathbf{e}_\theta + b_z(r,\theta,z) \mathbf{e}_z
+            \]  
+
+            <li> Vetor tração </li>  
+
+            \[
+                \mathbf{s}(\mathbf{x}) = s_r(r,\theta,z) \mathbf{e}_r + s_\theta(r,\theta,z) \mathbf{e}_\theta + s_z(r,\theta,z) \mathbf{e}_z
+            \]
+
+            <li> Vetor normal </li>    
+
+            \[
+                \mathbf{n}(\mathbf{x}) = n_r(r,\theta,z) \mathbf{e}_r + n_\theta(r,\theta,z) \mathbf{e}_\theta + n_z(r,\theta,z) \mathbf{e}_z
+            \]
+
+            <li> Matriz do tensor de deformações </li>   
+
+            \[
+                [\mathbf{E}(\mathbf{x})]=
+                \left[
+                \begin{array}{lcr}
+                \varepsilon_r & \varepsilon_{r\theta} & \varepsilon_{rz} \cr
+                \varepsilon_{r\theta} & \varepsilon_{\theta} & \varepsilon_{\theta z} \cr
+                \varepsilon_{rz} & \varepsilon_{\theta z} & \varepsilon_{z}
+                \end{array}
+                \right]  
+            \]
+
+            <p>com as componetes da matriz funções de \( (r,\theta,z) \).</p>
+
+            <li> Matriz do tensor de tensões </li> 
+
+            \[
+                [\mathbf{T}(\mathbf{x})]=
+                \left[
+                \begin{array}{lcr}
+                \sigma_r & \tau_{r\theta} & \tau_{rz} \cr
+                \tau_{r\theta} & \sigma_{\theta} & \tau_{\theta z} \cr
+                \tau_{rz} & \tau_{\theta z} & \sigma_{z}
+                \end{array}
+                \right]  
+            \]
+
+            <p>com as componetes da matriz funções de \( (r,\theta,z) \).</p>
+        </ul>
+
+        <h3>Simetria de revolução</h3>
+        
+        Corpo cilindrico ${\cal B}$:
+        <ul>    
+            <li> Geometria: </li>
+
+            <ul>
+                <li>Raio interno $a$ e raio externo $b$</li>
+                
+                <ul>
+                    <li>($a=0$ cilindro maciço)</li>
+                </ul>
+
+                <li>Comprimento </li>
+                
+                <ul>
+                    <li>muito longo (infinito)</li>
+                    <li>estado plano de deformação</li>
+                </ul>
+            </ul>
+
+            <li>Condições de contorno:</li>
+            <ul>
+                <li>Superfícies livre de tração (\(\mathbf{s}=\mathbf{0}\))</li>
+                <li>Pressão interna \(p_i = 0\) e pressão externa \(p_e = 0\)</li>
+            </ul>
+
+            <li> Forças de corpo: </li> 
+            <ul>
+                <li>\(\mathbf{b}=\mathbf{0}\)</li>
+            </ul>
+        </ul>
+
+        <p>Sistemas de coordenadas cilindricos tal que o eixo \(z\) é o  eixo do cilindro (eixo de simetria)</p>
+
+    <div class="center">
+        <figure>
+            <img src="./imagens/tubo.svg" width="500px">
+            <figcaption>Figura 1 - Esquemático da geometria.</figcaption>
+          </figure>
+    </div>
+
+    <h3> Simplificação das equações de governo </h3>
+
+    <h4>1. Hipóteses adotadas:</h4>
+    <ul>
+    <li>Simetria de revolução:
+        <ul>
+        <li>Deslocamento radial \( u_r = u \) e temperatura \( \vartheta \) dependem apenas de \( r \)</li>
+        </ul>
+        \[
+        \frac{\partial u}{\partial \theta} = \frac{\partial u}{\partial z} = 0
         \]
+        <ul>
+        <li>Deslocamento circunferencial \( u_\theta = 0 \)</li>
+        </ul>
+    </li>
+    <li>Estado plano de deformação:
+        \[
+        \varepsilon_z=\varepsilon_{rz}=\varepsilon_{\theta z}=0
+        \]
+    </li>
+    </ul>
 
+    <h4>2. Consequências das hipóteses adotadas</h4>
+
+    <ul>
+    <li>Usando a relação deformação-deslocamento:
+        \[
+        \varepsilon_r = \frac{d u}{d r}, \quad \varepsilon_\theta = \frac{u}{r} \quad\mbox{e}\quad \varepsilon_{r\theta} = 0
+        \]
+    </li>
+
+    <li>Usando as relações constitutivas:
+        \[
+        \left\{
+        \begin{array}{l}
+            \sigma_r = \lambda \left(\frac{d u}{d r} + \frac{u}{r}  \right) + 2 G\frac{d u}{d r}\\
+            \sigma_\theta = \lambda \left(\frac{d u}{d r} + \frac{u}{r} \right) + 2 G\frac{u}{ r} \\
+            \sigma_z = \lambda \left(\frac{d u}{d r} + \frac{u}{r}  \right)
+        \end{array}
+        \right.
+        \]
+    </li>
+
+    <li>Das equações de equilíbrio na ausência de forças de corpo:
+        \[
+            \frac{d \sigma_r}{d r}  + \frac{\sigma_r-\sigma_\theta}{r} = 0 \implies \frac{d}{d r}\left(\frac{1}{r}\frac{d}{d r}\left({u}{r}\right)\right)=0
+        \]
+    </li>
+
+    </li>
+
+    <li>Condições de contorno:
+        <ul>
+        <li>Superfície interna \( r=a \):
+            \[
+            \mathbf{T}\mathbf{n}=- p_i\mathbf{n}, \quad \mathbf{n}=-\mathbf{e}_r  \implies \sigma_r(a) = -p_i
+            \]
+        </li>
+        <li>Superfície externa \( r=b \):
+            \[
+            \mathbf{T}\mathbf{n}=- p_e\mathbf{n}, \quad \mathbf{n}=\mathbf{e}_r \implies \sigma_r(b) = -p_e
+            \]
+        </li>
+        </ul>
+    </li>
+    </ul>
+
+    <h4>3. Solução das equações</h4>
+
+    <ul>
+        <li>Resolvend a equação de equilíbrio para o deslocamento:</li>
+            \[
+                u(r) = C_1 r + \frac{C_2}{r}
+            \]
+            <p>onde \(C_1\) e \(C_2\) são constantes de integração a serem determinadas.</p>
+
+        <li>Substituindo \(u(r)\) na equação constitutiva e agrupando os termos:</li>
+            \[
+            \sigma_r = A - \dfrac{B}{r^2}, \sigma_\theta = A + \dfrac{B}{r^2} \quad\text{e}\quad \sigma_z = A
+            \]
+            <p>onde \( A \) e \( B \) são constantes a serem determinadas.</p>    
+
+        <li> Aplicando as condições de contorno \(\sigma_r(a) = -p_i\) e \(\sigma_r(b) = -p_e\) e resolvendo para as constantes:</li>
+            \[
+            A = \frac{b^2 p_e -a^2 p_i}{a^2 - b^2} \quad \text{e} \quad B = \frac{a^2 b^2 (p_e - p_i)}{a^2 - b^2}
+            \]
+    </ul>
+
+    <h1>Adicionar gráficos!!!</h1>
+       
     </main>
 </body>
 </html>
