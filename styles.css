@@ -82,3 +82,32 @@ figure img {
     box-sizing: border-box;   /* evita que o padding quebre a largura */
   }
 }
+
+/* Button */
+#controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px; /* space between elements */
+  margin-bottom: 20px;
+}
+
+#controls input {
+  width: 60px;
+  padding: 1px;
+  font-size: 1rem;
+}
+
+#controls button {
+  padding: 1px 12px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Plot */
+#plot {
+  display: flex;
+  justify-content: center;  /* centraliza horizontalmente */
+  align-items: center;      /* centraliza verticalmente (se tiver altura definida) */
+  margin-top: 20px;
+}

@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Latex -->
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- PyScript -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+    
     <title>Mecânica dos Sólidos</title>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -278,8 +285,58 @@
             \]
     </ul>
 
-    <h1>Adicionar gráficos!!!</h1>
-       
+    <h3>Gráfico das tensões</h3>
+
+    <div id="controls">
+        <label for="a">\(a:\)</label>
+        <input type="number" id="a" value="1" step="0.1">
+
+        <label for="b">\(b:\)</label>
+        <input type="number" id="b" value="1" step="0.1">
+
+        <label for="p_i">\(p_i:\)</label>
+        <input type="number" id="p_i" value="1" step="0.1">
+
+        <label for="p_e">\(p_e:\)</label>
+        <input type="number" id="p_e" value="1" step="0.1">
+
+        <button py-click="update">Plot</button>
+    </div>
+
+    <div id="plot"></div>
+
+    <py-config>
+        packages = ["numpy", "matplotlib"]
+    </py-config>
+
+    <py-script>
+        import numpy as np
+        import matplotlib.pyplot as plt
+        from js import document
+        from pyscript import display
+        
+        r = np.linspace(1, 2, 100)
+
+        def update(*args):
+            document.getElementById("plot").innerHTML = ""  # Limpa a saída
+
+            fig, ax = plt.subplots(facecolor='none')  # transparent figure background
+            ax.set_facecolor('none')            # transparent axes background
+
+            a = float(document.getElementById("a").value)
+            b = float(document.getElementById("b").value)
+
+            y = a * r**2 + b * r
+
+            ax.plot(r, y, color='royalblue')
+            ax.plot(r, r, color='royalblue')
+            ax.set_xlabel('r')
+            ax.set_ylabel('y')
+            ax.grid(True)
+
+            display(fig, target="plot")
+        update()
+    </py-script>
     </main>
 </body>
 </html>
