@@ -29,53 +29,40 @@
     </nav>
 
     <main>
-        <h2>Disco girante</h2>
+        <h2>Tubo de parede grossa</h2>
 
         <h3>Considerações:</h3>
 
         <ul>    
-            <li>Estado plano de tensões (Caso 1)</li>
-              <ul>
-                <li>\(\sigma_0=0\)</li>
-              </ul>            
+            <li>Estado plano de deformação (Caso 2)</li>
             <li>Condições de contorno:</li>
             <ul>
-                <li>Superfícies livre de tração (\(\mathbf{s}=\mathbf{0}\))</li>
+                <li>Pressão interna \(p_i\) e pressão externa \(p_e\)</li>
             </ul>
 
-            <li> Forças de corpo (força centrífuga por unidade de volume): </li> 
+            <li> Forças de corpo: </li> 
             <ul>
-                <li>\(\mathbf{b}=\rho \omega^2 r \mathbf{e}_r\)</li>
+                <li>\(\mathbf{b}=\mathbf{0}\)</li>
             </ul>
-            onde \(\rho\) é a massa específica e \(\omega\) a velocidade angular do disco.
         </ul>
-
-        Adotando sistema de coordenadas cilindricos solidário ao disco tal que o eixo \(z\) é o eixo de rotação (eixo de simetria):
 
     <h3>Consequências das hipóteses adotadas</h4>
 
     <li>Relações constitutivas:
         \[
         \left\{
-        \begin{aligned}
-            & \sigma_r = \lambda \left( \frac{d u}{d r} + \frac{u}{r} + \varepsilon_z \right) + 2 \mu \frac{d u}{d r} \\
-            & \sigma_\theta = \lambda \left( \frac{d u}{d r} + \frac{u}{r} + \varepsilon_z \right) + 2 \mu \frac{u}{r} \\
-            & \sigma_z = \lambda \left( \frac{d u}{d r} + \frac{u}{r} + \varepsilon_z \right) + 2 \mu \varepsilon_z
-        \end{aligned}
+        \begin{array}{l}
+            \sigma_r = \lambda \left(\frac{d u}{d r} + \frac{u}{r}  \right) + 2 G\frac{d u}{d r}\\
+            \sigma_\theta = \lambda \left(\frac{d u}{d r} + \frac{u}{r} \right) + 2 G\frac{u}{ r} \\
+            \sigma_z = \lambda \left(\frac{d u}{d r} + \frac{u}{r}  \right)
+        \end{array}
         \right.
         \]
-
-      onde 
-
-      \[
-        \varepsilon_z =\frac{-\lambda}{\lambda + 2\mu}\left(\frac{d u}{d r} + \frac{u}{r}\right)
-      \]
-
     </li>
 
-    <li>Das equações de equilíbrio:
+    <li>Das equações de equilíbrio na ausência de forças de corpo:
         \[
-            \frac{d \sigma_r}{d r}  + \frac{\sigma_r-\sigma_\theta}{r} + \rho\omega^2 r = 0  \implies \frac{d}{d r}\left(\frac{1}{r}\frac{d}{d r}\left({u}{r}\right)\right)=-\frac{1-\nu^2}{E}\rho\omega^2 r
+            \frac{d \sigma_r}{d r}  + \frac{\sigma_r-\sigma_\theta}{r} = 0 \implies \frac{d}{d r}\left(\frac{1}{r}\frac{d}{d r}\left({u}{r}\right)\right)=0
         \]
     </li>
 
@@ -83,14 +70,16 @@
 
     <li>Condições de contorno:
         <ul>
-        <li>Superfície interna \(a\):
+        <li>Superfície interna \( r=a \):
             \[
-            \mathbf{T}\mathbf{n}=\mathbf{0}, \quad \mathbf{n}=-\mathbf{e}_r \quad \implies \quad \sigma_r(a) = 0
+            \mathbf{T}\mathbf{n}=- p_i\mathbf{n}, \quad \mathbf{n}=-\mathbf{e}_r  \implies \sigma_r(a) = -p_i
             \]
-        <li>Superfície externa \(b\):
+        </li>
+        <li>Superfície externa \( r=b \):
             \[
-            \mathbf{T}\mathbf{n}=\mathbf{0}, \quad \mathbf{n}=\mathbf{e}_r \quad \implies \quad \sigma_r(b) = 0
+            \mathbf{T}\mathbf{n}=- p_e\mathbf{n}, \quad \mathbf{n}=\mathbf{e}_r \implies \sigma_r(b) = -p_e
             \]
+        </li>
         </ul>
     </li>
     </ul>
@@ -100,19 +89,19 @@
     <ul>
         <li>Resolvendo a equação de equilíbrio para o deslocamento:</li>
             \[
-                u(r) = C_1 r + \frac{C_2}{r} - \frac{1-\nu^2}{E}\rho\omega^2\frac{r^3}{8}
+                u(r) = C_1 r + \frac{C_2}{r}
             \]
             <p>onde \(C_1\) e \(C_2\) são constantes de integração a serem determinadas.</p>
 
         <li>Substituindo \(u(r)\) na equação constitutiva e agrupando os termos:</li>
             \[
-            \sigma_r(r) = A - \frac{B}{r^2} - \frac{\rho\omega^2 r^2}{8}(3+\nu), \quad\text{e}\quad \sigma_\theta(r) = A + \frac{B}{r^2} - \frac{\rho\omega^2 r^2}{8}(1+3\nu)
+            \sigma_r(r) = A - \dfrac{B}{r^2}, \quad \sigma_\theta(r) = A + \dfrac{B}{r^2} \quad\text{e}\quad \sigma_z(r) = 2 \nu A
             \]
-            <p>onde \( A \) e \( B \) são constantes a serem determinadas.</p>       
+            <p>onde \( A \) e \( B \) são constantes a serem determinadas e \( \nu \) é a razão de Poisson do material.</p>    
 
-        <li> Aplicando as condições de contorno \(\sigma_r(a) = 0\) e \(\sigma_r(b) = 0\) e resolvendo para as constantes:</li>
+        <li> Aplicando as condições de contorno \(\sigma_r(a) = -p_i\) e \(\sigma_r(b) = -p_e\) e resolvendo para as constantes:</li>
             \[
-            A = \frac{1}{8}(3 + \nu) \rho \omega^2 (a^2 + b^2) \quad \text{e} \quad B = \frac{1}{8}(3 + \nu) \rho \omega^2 a^2 b^2
+            A = \frac{a^2 p_i - b^2 p_e}{b^2 - a^2} \quad \text{e} \quad B = \frac{a^2 b^2 (p_i - p_e)}{b^2 - a^2}
             \]
 
             Portanto, as tensões são dadas por:
@@ -120,9 +109,9 @@
             \[
             \left\{
                 \begin{aligned}
-                & \sigma_r(r) = \frac{3 + \nu}{8} \rho \omega^2 \left(a^2 + b^2 - r^2 - \frac{a^2 b^2}{r^2}\right), \\
-                & \sigma_\theta(r) = \frac{3 + \nu}{8} \rho \omega^2 \left(a^2 + b^2 - \frac{1 + 3\nu}{3 + \nu} r^2 + \frac{a^2 b^2}{r^2}\right),\\
-                & \sigma_z(r) = 0
+                & \sigma_r(r) = \frac{a^2 p_i - b^2 p_e}{b^2 - a^2} - \frac{a^2 b^2 (p_i - p_e)}{r^2(b^2 - a^2)}, \\
+                & \sigma_\theta(r) = \frac{a^2 p_i - b^2 p_e}{b^2 - a^2} + \frac{a^2 b^2 (p_i - p_e)}{r^2(b^2 - a^2)},\\
+                & \sigma_z(r) = \frac{2 \nu  (a^2 p_i - b^2 p_e)}{b^2 - a^2}.
                 \end{aligned}
             \right.
             \]
@@ -137,16 +126,16 @@
         <label for="b">\(b\) [mm]:</label>
         <input type="number" id="b" value="200" step="1">
 
-        <label for="omega">\(\omega\) [rad/s]:</label>
-        <input type="number" id="omega" value="100" step="1">
+        <label for="p_i">\(p_i\) [Mpa]:</label>
+        <input type="number" id="p_i" value="100" step="1">
 
-        <label for="rho">\(\rho\) [kg/m\(^3\)]:</label>
-        <input type="number" id="rho" value="7800" step="100">
+        <label for="p_e">\(p_e\) [MPa]:</label>
+        <input type="number" id="p_e" value="0" step="1">
 
         <label for="nu">\(\nu\):</label>
         <input type="number" id="nu" value="0.3" step="0.01">
 
-        <button py-click="update">Plotar</button>
+        <button py-click="update">Plot</button>
     </div>
 
     <div id="plot"></div>
@@ -172,10 +161,10 @@
         ax.set_facecolor('none')
     
         try:
-            a = float(document.getElementById("a").value) / 1000
-            b = float(document.getElementById("b").value) / 1000
-            omega = float(document.getElementById("omega").value)
-            rho = float(document.getElementById("rho").value)
+            a = float(document.getElementById("a").value)
+            b = float(document.getElementById("b").value)
+            p_i = float(document.getElementById("p_i").value)
+            p_e = float(document.getElementById("p_e").value)
             nu = float(document.getElementById("nu").value)
         except Exception as e:
             document.getElementById("output").innerText = "Por favor, insira valores numéricos válidos."
@@ -189,11 +178,7 @@
         if b < 0:
             document.getElementById("output").innerText = "Valor inválido para o raio externo."
             return
-
-        if rho < 0:
-            document.getElementById("output").innerText = "Valor inválido para a massa específica."
-            return
-
+    
         if a >= b:
             document.getElementById("output").innerText = "O raio interno precisa ser menor que o externo."
             return
@@ -201,21 +186,23 @@
         if (nu < 0) or (nu >= 0.5):
             document.getElementById("output").innerHTML = "Razão de Poisson fora dos valores aceitáveis [0, 0.5)."
             return
-       
+    
         r = np.linspace(a, b, 300)
-
-        coeff = (3 + nu) / 8 * rho * omega**2
-
+    
         if a == 0:
-            sigma_r = coeff * (b**2 - r**2) / 1e6
-            sigma_theta = coeff * (b**2 - ((1 + 3*nu) / (3 + nu)) * r**2) / 1e6       
+            sigma_r = np.full_like(r, -p_e)     
+            sigma_theta = np.full_like(r, -p_e)     
+            sigma_z = np.full_like(r, -2*nu*p_e)           
 
         else: 
-            sigma_r = coeff * (a**2 + b**2 - r**2 - (a**2 * b**2) / r**2) / 1e6
-            sigma_theta = coeff * (a**2 + b**2 - ((1 + 3*nu) / (3 + nu)) * r**2 + (a**2 * b**2) / r**2) / 1e6
-            
-        sigma_z = np.zeros_like(r) / 1e6
-   
+            denom = b**2 - a**2
+            C1 = (a**2 * p_i - b**2 * p_e) / denom
+            C2 = (a**2 * b**2 * (p_i - p_e)) / denom
+        
+            sigma_r = C1 - C2 / r**2
+            sigma_theta = C1 + C2 / r**2
+            sigma_z = np.full_like(r, 2*nu*C1)
+    
         # Plot all stresses
         ax.plot(r, sigma_r, label=r"$\sigma_r$", color="royalblue")
         ax.plot(r, sigma_theta, label=r"$\sigma_\theta$", color="darkorange")
@@ -227,9 +214,9 @@
         ax.grid(True)
     
         # Set axis limits to include all stresses with padding
-        ymin = min(sigma_r.min(), sigma_theta.min())
-        ymax = max(sigma_r.max(), sigma_theta.max())
-        padding_y = 0.05 * (ymax - ymin)
+        ymin = min(sigma_r.min(), sigma_theta.min(), sigma_z.min())
+        ymax = max(sigma_r.max(), sigma_theta.max(), sigma_z.max())
+        padding_y = 0.05 * (ymax - ymin) if ymax != ymin else 1
         ax.set_ylim(ymin - padding_y, ymax + padding_y)
         ax.set_xlim(a, b)
     

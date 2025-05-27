@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Latex -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- PyScript -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+    
+    <title>Mecânica dos Sólidos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Mecânica dos Sólidos</h1>
+        <h2>Prof. Fernando Duda</h2>
+    </header>
+
+    <nav>
+        <ul>
+            <li>
+                <a href="index.html"> Menu principal </a>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>Tubo de parede grossa (Tensões térmicas)</h2>
+
+        <h3>Mecanismos de deformação: elástico e térmico</h3>
+
+        <ul>
+        <li>
+            Decomposição aditiva das deformações em suas parcelas elástica 
+            \( \mathbf{E}_e \) e térmica \( \mathbf{E}_T \):
+            <div>\[
+            \mathbf{E} = \mathbf{E}_e + \mathbf{E}_T
+            \]</div>
+        </li>
+
+        <li>
+            Equação constitutiva para a parte térmica:
+            <div>\[
+            \mathbf{E}_T = \alpha (\vartheta - \vartheta_R) \mathbf{I}
+            \]</div>
+            <ul>
+            <li>\( \alpha \): coeficiente de expansão térmica</li>
+            <li>\( \vartheta \): temperatura</li>
+            <li>\( \vartheta_R \): temperatura de referência</li>
+            </ul>
+        </li>
+
+        <li>
+            Equação constitutiva para o tensor de tensões \( \mathbf{T} \):
+            <div>\[
+            \mathbf{T} = \mathbb{C}[\mathbf{E}_e] = 
+            \lambda (\mathrm{tr} \mathbf{E}_e)\mathbf{I} + 2\mu \mathbf{E}_e = 
+            \lambda (\mathrm{tr} \mathbf{E})\mathbf{I} + 2\mu \mathbf{E}
+            - \alpha(3\lambda + 2\mu)\triangle \vartheta\mathbf{I}
+            \]</div>
+            onde
+            <div>\[
+            \triangle \vartheta = \vartheta - \vartheta_R
+            \]</div>
+            é a variação de temperatura.
+        </li>
+        </ul>
+
+        <h3>Considerações:</h3>
+
+        <ul>
+            <li>Termperatura \(\vartheta\) depende apenas de \(r\) e é dada por:</li>
+            \[
+            \vartheta(r) = \vartheta_b + \frac{\vartheta_a-\vartheta_b}{\log\left(\frac{b}{a}\right)}\log\left(\frac{b}{r}\right)
+            \]
+            <p>onde \(\vartheta_a\) e \(\vartheta_b\) são as temperaturas nas superfíies internas e externas, respectivamente.</p>
+            <li>Termperatura de referência \( \vartheta_R = \vartheta_b\)</li>
+            <li>Estado plano de deformação (Caso 2)</li>
+            <li>Condições de contorno:</li>
+            <ul>
+                <li>Superfícies livre de tração (\(\mathbf{s}=\mathbf{0}\))</li>
+            </ul>
+
+            <li> Forças de corpo: </li> 
+            <ul>
+                <li>\(\mathbf{b}=\mathbf{0}\)</li>
+            </ul>
+        </ul>
+
+    <h3>Consequências das hipóteses adotadas</h4>
+
+    <li>Relações constitutivas:
+        \[
+        \left\{
+        \begin{aligned}
+            & \sigma_r = \lambda \left(\frac{d u}{d r} + \frac{u}{r}  \right) + 2 G\frac{d u}{d r} - \alpha(3\lambda + 2G)\triangle \vartheta\\
+            & \sigma_\theta = \lambda \left(\frac{d u}{d r} + \frac{u}{r} \right) + 2 G\frac{u}{ r} - \alpha(3\lambda + 2G)\triangle \vartheta\\
+            & \sigma_z = \lambda \left(\frac{d u}{d r} + \frac{u}{r}  \right) - \alpha(3\lambda + 2G)\triangle \vartheta
+        \end{aligned}
+        \right.
+        \]
+    </li>
+
+    <li>Das equações de equilíbrio na ausência de forças de corpo:
+        \[
+            \frac{d \sigma_r}{d r}  + \frac{\sigma_r-\sigma_\theta}{r} = 0 \implies \frac{d}{d r}\left(\frac{1}{r}\frac{d}{d r}\left({u}{r}\right)\right)=\alpha\frac{1+\nu}{1-\nu}\frac{d \triangle \vartheta}{d r}
+        \]
+    </li>
+
+    </li>
+
+    <li>Condições de contorno:
+        <ul>
+        <li>Superfície interna \( r=a \):
+            \[
+            \mathbf{T}\mathbf{n}=\mathbf{0}, \quad \mathbf{n}=-\mathbf{e}_r  \implies \sigma_r(a) = 0
+            \]
+        </li>
+        <li>Superfície externa \( r=b \):
+            \[
+            \mathbf{T}\mathbf{n}=\mathbf{0}, \quad \mathbf{n}=\mathbf{e}_r \implies \sigma_r(b) = 0
+            \]
+        </li>
+        </ul>
+    </li>
+    </ul>
+
+    <h4>3. Solução das equações</h4>
+
+    <ul>
+        <li>Integrando a equação de equilíbrio para o deslocamento:</li>
+            \[
+                u(r) = \frac{C_1}{2} r + \frac{C_2}{r} + \alpha\frac{1+\nu}{1-\nu} \frac{1}{r}\int_a^r \triangle \vartheta (r^*)r^* \, dr^*
+            \]
+            <p>onde \(C_1\) e \(C_2\) são constantes de integração a serem determinadas.</p>
+
+        <li>Substituindo \(u(r)\) na equação constitutiva e agrupando os termos:</li>
+            \[
+            \left\{
+            \begin{aligned}
+                & \sigma_r(r) = A - \frac{B}{r^2} - \frac{\alpha E}{(1-\nu)r^2} \int_a^r \triangle \vartheta(r^*) r^*\; dr^*\\
+                & \sigma_\theta(r) = A + \frac{B}{r^2} + \frac{\alpha E}{(1-\nu)r^2} \int_a^r \triangle \vartheta(r^*) r^*\; dr^* -  \frac{\alpha E}{(1-\nu)} \triangle \vartheta\\
+                & \sigma_z(r) = ...
+            \end{aligned}
+            \right.
+            \]
+            <p>onde \( A \) e \( B \) são constantes a serem determinadas, \( E \) é o módulo de Young e \( \nu \) é a razão de Poisson do material.</p>    
+
+        <li> Aplicando as condições de contorno \(\sigma_r(a) = 0\) e \(\sigma_r(b) = 0\) e resolvendo para as constantes:</li>
+            \[
+            A = \frac{ E\alpha}{(1-\nu)(b^2-a^2)} \int_a^b \triangle \vartheta(r^*) r^*\; dr^* \quad \text{e} \quad B = \frac{a^2 E\alpha}{(1-\nu)(b^2-a^2)} \int_a^b \triangle \vartheta(r^*) r^*\; dr^* 
+            \]
+
+            Portanto, as tensões são dadas por:
+
+            \[
+            \left\{
+                \begin{aligned}
+                & \sigma_r(r) = \frac{\alpha E \delta}{2(1-\nu)\log\left(\frac{b}{a}\right)}\left[ - \log\left(\frac{b}{r}\right) - \frac{a^2(r^2-b^2)}{r^2(b^2-a^2)}\log\left(\frac{b}{a}\right) \right], \\
+                & \sigma_\theta(r) = \frac{\alpha E \delta}{2(1-\nu)\log\left(\frac{b}{a}\right)}\left[ 1 - \log\left(\frac{b}{r}\right) - \frac{a^2(r^2+b^2)}{r^2(b^2-a^2)}\log\left(\frac{b}{a}\right) \right],\\
+                & \sigma_z(r) = \frac{\alpha E \delta}{(1-\nu)\log\left(\frac{b}{a}\right)}\left[ \nu \left(\frac{1}{2}  - \frac{ a^2}{(b^2-a^2)}\log\left(\frac{b}{a}\right)\right) - (1+\nu)\log\left(\frac{b}{r}\right) \right].
+                \end{aligned}
+            \right.
+            \]
+
+            onde \(\delta = \vartheta_a-\vartheta_b\).
+    </ul>
+
+    <h3>Gráfico das tensões</h3>
+
+    <div id="controls">
+        <label for="a">\(a\) [mm]:</label>
+        <input type="number" id="a" value="100" step="1">
+
+        <label for="b">\(b\) [mm]:</label>
+        <input type="number" id="b" value="200" step="1">
+
+        <label for="delta">\(\delta\) [°C]:</label>
+        <input type="number" id="delta" value="50" step="1">
+
+        <label for="alpha">\(\alpha\) [1/°C]:</label>
+        <input type="number" id="alpha" value="1e-5" step="1e-5">
+
+        <label for="E">\(E\) [GPa]:</label>
+        <input type="number" id="E" value="210" step="1">
+
+        <label for="nu">\(\nu\):</label>
+        <input type="number" id="nu" value="0.3" step="0.01">
+
+        <button py-click="update">Plot</button>
+    </div>
+
+    <div id="plot"></div>
+    
+    <div id="output" style="color: red; margin-bottom: 1em;"></div>
+
+    <py-config>
+        packages = ["numpy", "matplotlib"]
+    </py-config>
+    
+    <py-script>
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from js import document
+    from pyscript import display
+    
+    def update(*args):
+        # Clear previous plot and messages
+        document.getElementById("plot").innerHTML = ""
+        document.getElementById("output").innerText = ""
+    
+        fig, ax = plt.subplots(facecolor='none')
+        ax.set_facecolor('none')
+    
+        try:
+            a = float(document.getElementById("a").value)
+            b = float(document.getElementById("b").value)
+            delta = float(document.getElementById("delta").value)
+            alpha = float(document.getElementById("alpha").value)
+            E = float(document.getElementById("E").value) * 1e9
+            nu = float(document.getElementById("nu").value)
+        except Exception as e:
+            document.getElementById("output").innerText = "Por favor, insira valores numéricos válidos."
+            return
+    
+        # Validation checks
+        if a <= 0:
+            document.getElementById("output").innerText = "Valor inválido para o raio interno."
+            return
+    
+        if b < 0:
+            document.getElementById("output").innerText = "Valor inválido para o raio externo."
+            return
+    
+        if a >= b:
+            document.getElementById("output").innerText = "O raio interno precisa ser menor que o externo."
+            return
+
+        if E < 0:
+            document.getElementById("output").innerText = "Valor inválido para o módulo de Young."
+            return
+
+        if (nu < 0) or (nu >= 0.5):
+            document.getElementById("output").innerHTML = "Razão de Poisson fora dos valores aceitáveis [0, 0.5)."
+            return
+    
+        r = np.linspace(a, b, 300)
+
+        factor = alpha*E*delta/(2*(1-nu)*np.log(b/a))
+
+        sigma_r = -factor*(np.log(b/r)+a**2*(r**2-b**2)*np.log(b/a)/(r**2*(b**2-a**2))) / 1e6
+        sigma_theta = factor*(1-np.log(b/r)-a**2*(r**2+b**2)*np.log(b/a)/(r**2*(b**2-a**2))) / 1e6
+        sigma_z = -2*factor*(nu*(1/2+(a**2)*np.log(b/a)/(b**2-a**2))+np.log(b/r)) / 1e6
+    
+
+        # Plot all stresses
+        ax.plot(r, sigma_r, label=r"$\sigma_r$", color="royalblue")
+        ax.plot(r, sigma_theta, label=r"$\sigma_\theta$", color="darkorange")
+        ax.plot(r, sigma_z, label=r"$\sigma_z$", color="green", linestyle="--")
+
+        ax.set_xlabel("r [mm]")
+        ax.set_ylabel("Tensão [MPa]")
+        ax.legend()
+        ax.grid(True)
+    
+        # Set axis limits to include all stresses with padding
+        ymin = min(sigma_r.min(), sigma_theta.min(), sigma_z.min())
+        ymax = max(sigma_r.max(), sigma_theta.max(), sigma_z.max())
+        padding_y = 0.05 * (ymax - ymin) if ymax != ymin else 1
+        ax.set_ylim(ymin - padding_y, ymax + padding_y)
+        ax.set_xlim(a, b)
+    
+        display(fig, target="plot")
+    
+    update()
+    </py-script>
+    
+    <footer style="text-align: center; margin: 20px; font-size: 0.9em; color: #555;">
+        <a href="index.html" style="text-decoration: none; color: #007acc;">&larr; Voltar para a página principal</a>
+    </footer>
+
+    </main>
+</body>
+</html>

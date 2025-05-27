@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Latex -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- PyScript -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+    
+    <title>Mecânica dos Sólidos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Mecânica dos Sólidos</h1>
+        <h2>Prof. Fernando Duda</h2>
+    </header>
+
+    <nav>
+        <ul>
+            <li>
+                <a href="index.html"> Menu principal </a>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>Simetria de revolução</h2>
+
+        <h3>Equações de governo</h3>
+
+        <p>
+            <b>Dados:</b> \( \cal B \), \(\lambda\), \(G\), \(\mathbf{b}\), \(\mathbf{s}\) e \(\bar{\mathbf{u}}\).
+        </p>
+        <p>
+            <b>Encontrar:</b> \(\mathbf{u}\), \(\mathbf{E}\) e \(\mathbf{T}\), tal que:
+        </p>
+        
+        <ul>
+            <li> Balanço de força: </li>
+        
+            \[
+                \mbox{div}\mathbf{T} + \mathbf{b} = \mathbf{0}
+            \]
+
+            <li> Equação constitutiva: </li>
+
+            \[
+            \mathbf{T} = \lambda(\mbox{tr}\mathbf{E})\, \mathbf{I} + 2 G\mathbf{E}
+            \]
+
+            <li> Relação entre deslocamento e deformação: </li>
+
+            \[
+            \mathbf{E}= \frac{\nabla \mathbf{u}+ \nabla \mathbf{u}^\top }{2}
+            \]
+
+            <li> Condições de contorno: </li>
+            
+            \[
+                \left\{
+                \begin{array}{lcr}
+                \mathbf{T}\mathbf{n}=\mathbf{s} \quad\mbox{em}\quad \partial_s{\cal B} \cr
+                \mathbf{u} = \bar{\mathbf{u}}  \quad\mbox{em}\quad \partial_u{\cal B}
+                \end{array}
+                \right.
+            \]
+
+            <ul>
+                <li>\( \partial_s{\cal B} \): parte do contorno de \(\cal B\) onde o vetor tensão é prescrito</li>
+                <li>\( \partial_u{\cal B} \): parte do contorno de \(\cal B\) onde o deslocamento é prescrito</li>
+            </ul>
+        </ul>
+
+        <h3>Sistema de coordenadas cilíndricas</h3>
+       
+        <ul>
+            <li> Origem \(\mathbf{o}\) </li>
+
+            <li> Base ortonormal móvel \( \{\mathbf{e}_r, \mathbf{e}_\theta,\mathbf{e}_z\} \) </li>
+
+            <li> Coordenadas de ponto \( \mathbf{x} \) </li>
+                
+            <li> Sistema de coordenadas cartesiano com o origem \(\mathbf{o}\): \( (x,y,z) \) </li>
+                
+            <li> Sistema de coordenadas cilíndrico em questão: </li>
+
+            \[
+                (r,\theta,z), \quad\mbox{onde} \quad \left\{
+                \begin{array}{lcr}
+                x = r \cos\theta  \cr
+                y = r \sin\theta
+                \end{array}
+                \right.
+            \]
+
+            <li> Campo  de deslocamentos </li> 
+            
+            \[
+                \mathbf{u}(\mathbf{x}) = u_r(r,\theta,z) \mathbf{e}_r + u_\theta(r,\theta,z) \mathbf{e}_\theta + u_z(r,\theta,z) \mathbf{e}_z
+            \]
+
+            <li> Força de corpo por unidade de volume </li> 
+
+            \[
+                \mathbf{b}(\mathbf{x}) = b_r(r,\theta,z) \mathbf{e}_r + b_\theta(r,\theta,z) \mathbf{e}_\theta + b_z(r,\theta,z) \mathbf{e}_z
+            \]  
+
+            <li> Vetor tração </li>  
+
+            \[
+                \mathbf{s}(\mathbf{x}) = s_r(r,\theta,z) \mathbf{e}_r + s_\theta(r,\theta,z) \mathbf{e}_\theta + s_z(r,\theta,z) \mathbf{e}_z
+            \]
+
+            <li> Vetor normal </li>    
+
+            \[
+                \mathbf{n}(\mathbf{x}) = n_r(r,\theta,z) \mathbf{e}_r + n_\theta(r,\theta,z) \mathbf{e}_\theta + n_z(r,\theta,z) \mathbf{e}_z
+            \]
+
+            <li> Matriz do tensor de deformações </li>   
+
+            \[
+                [\mathbf{E}(\mathbf{x})]=
+                \left[
+                \begin{array}{lcr}
+                \varepsilon_r & \varepsilon_{r\theta} & \varepsilon_{rz} \cr
+                \varepsilon_{r\theta} & \varepsilon_{\theta} & \varepsilon_{\theta z} \cr
+                \varepsilon_{rz} & \varepsilon_{\theta z} & \varepsilon_{z}
+                \end{array}
+                \right]  
+            \]
+
+            <p>com as componetes da matriz funções de \( (r,\theta,z) \).</p>
+
+            <li> Matriz do tensor de tensões </li> 
+
+            \[
+                [\mathbf{T}(\mathbf{x})]=
+                \left[
+                \begin{array}{lcr}
+                \sigma_r & \tau_{r\theta} & \tau_{rz} \cr
+                \tau_{r\theta} & \sigma_{\theta} & \tau_{\theta z} \cr
+                \tau_{rz} & \tau_{\theta z} & \sigma_{z}
+                \end{array}
+                \right]  
+            \]
+
+            <p>com as componetes da matriz funções de \( (r,\theta,z) \).</p>
+        </ul>
+
+        <h3>Corpo cilindrico \(\cal B\)</h3>
+
+        <ul>    
+            <li> Geometria: </li>
+
+            <ul>
+                <li>Raio interno \(a\) e raio externo \(b\)</li>
+                
+                <ul>
+                    <li>(\(a=0\) cilindro maciço)</li>
+                </ul>
+
+                <li>Comprimento \(L\)</li>
+            </ul>
+        </ul>
+
+    <div class="center">
+        <figure>
+            <img src="./imagens/tubo.svg" width="500px">
+            <figcaption>Figura 1 - Esquemático da geometria.</figcaption>
+          </figure>
+    </div>
+
+    <h3> Simplificação das equações de governo </h3>
+
+    <h4>1. Hipóteses adotadas:</h4>
+    <ul>
+    <li>Simetria de revolução:
+        <ul>
+        <li>Deslocamento radial \( u_r = u \) depende apenas de \( r \)</li>
+        </ul>
+        \[
+        \frac{\partial u}{\partial \theta} = \frac{\partial u}{\partial z} = 0
+        \]
+        <ul>
+        <li>Deslocamento circunferencial \( u_\theta = 0 \)</li>
+        </ul>
+    </li>
+    <li>Caso 1: Estado plano de tensão generalizado:
+        \[
+        \sigma_z = \bar\sigma \quad\text{e}\quad \varepsilon_{rz}=\varepsilon_{\theta z}=0
+        \]
+    </li>
+    <p>onde \(\bar\sigma\) é uma constante a ser determinada .</p>
+
+    <li>Caso 2: Estado plano de deformação:
+        \[
+        \varepsilon_z=\varepsilon_{rz}=\varepsilon_{\theta z}=0
+        \]
+    </li>
+    </ul>
+
+    <h4>2. Consequências das hipóteses adotadas</h4>
+
+    <ul>
+    <li>Usando a relação deformação-deslocamento:
+        \[
+        \varepsilon_r = \frac{d u}{d r}, \quad \varepsilon_\theta = \frac{u}{r} \quad\mbox{e}\quad \varepsilon_{r\theta} = 0
+        \]
+    </li>
+
+    <li>Usando as relações constitutivas:
+        \[
+        \left\{
+        \begin{aligned}
+            & \sigma_r = \lambda \left( \frac{d u}{d r} + \frac{u}{r} + \varepsilon_z \right) + 2 \mu \frac{d u}{d r} \\
+            & \sigma_\theta = \lambda \left( \frac{d u}{d r} + \frac{u}{r} + \varepsilon_z \right) + 2 \mu \frac{u}{r} \\
+            & \sigma_z = \lambda \left( \frac{d u}{d r} + \frac{u}{r} + \varepsilon_z \right) + 2 \mu \varepsilon_z
+        \end{aligned}
+        \right.
+        \]
+    </li>
+
+    com \( \varepsilon_z \) dado por:
+
+    \[
+    \left\{
+    \begin{array}{lcr}
+    \mbox{Caso 1}:\quad \varepsilon_z =\frac{1}{\lambda + 2\mu}\left(\bar\sigma - \lambda \left(\frac{d u}{d r} + \frac{u}{r}\right)\right) \cr
+    \mbox{Caso 2}:\quad \varepsilon_z  = 0  
+    \end{array} 
+    \right.
+    \]
+
+    <li>Das equações de equilíbrio:
+        \[
+            \frac{d \sigma_r}{d r}  + \frac{\sigma_r-\sigma_\theta}{r} + b_r= 0
+        \]
+    </li>
+
+    </li>
+
+    <li>Condições de contorno:
+        <ul>
+        <li>Superfície interna \( r=a \):
+            \[
+            \mathbf{T}\mathbf{n}=- p_i\mathbf{n}, \quad \mathbf{n}=-\mathbf{e}_r  \implies \sigma_r(a) = -p_i
+            \]
+        </li>
+        <li>Superfície externa \( r=b \):
+            \[
+            \mathbf{T}\mathbf{n}=- p_e\mathbf{n}, \quad \mathbf{n}=\mathbf{e}_r \implies \sigma_r(b) = -p_e
+            \]
+        </li>
+        <li>Superfície \( z = 0 \) (Caso 1):
+            \[
+            \mathbf{T}\mathbf{n}= \sigma_0 \mathbf{n}, \quad \mathbf{n}=-\mathbf{e}_z \implies \sigma_z = \bar\sigma = \sigma_0
+            \]
+        </li>
+        <li>Superfície \( z = L \) (Caso 1):
+            \[
+            \mathbf{T}\mathbf{n}= \sigma_0 \mathbf{n}, \quad \mathbf{n}=\mathbf{e}_z \implies \sigma_z = \bar\sigma = \sigma_0
+            \]
+        </li>
+        </ul>
+    </li>
+    </ul>
+
+    <footer style="text-align: center; margin: 20px; font-size: 0.9em; color: #555;">
+        <a href="index.html" style="text-decoration: none; color: #007acc;">&larr; Voltar para a página principal</a>
+    </footer>
+
+    </main>
+</body>
+</html>

@@ -83,9 +83,23 @@ figure img {
   }
 }
 
+main ul {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding-left: 1.5em;
+}
+main ul ul {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+main li {
+  margin-bottom: 0.3em;
+}
+
 /* Button */
 #controls {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 15px; /* space between elements */
@@ -106,8 +120,18 @@ figure img {
 
 /* Plot */
 #plot {
+  max-width: 100%;     /* limit container width to viewport */
+  width: 100%;         /* take full width available */
+  overflow-x: auto;    /* horizontal scroll if needed */
   display: flex;
-  justify-content: center;  /* centraliza horizontalmente */
-  align-items: center;      /* centraliza verticalmente (se tiver altura definida) */
+  justify-content: center; /* center content horizontally */
   margin-top: 20px;
 }
+
+/* Make matplotlib figure images responsive */
+#plot img {
+  max-width: 100% !important;  /* never overflow container */
+  height: auto !important;     /* keep aspect ratio */
+  display: block;
+}
+
