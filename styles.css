@@ -96,6 +96,18 @@ main li {
   margin-bottom: 0.3em;
 }
 
+/* Equações grandes */
+.math-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  /* background: #f7f7f7; */ /* Remova essa linha */
+  /* border: 1px solid #ccc; */ /* Remova essa linha */
+  /* padding: 10px; */ /* Remova ou reduza essa linha */
+  /* border-radius: 8px; */ /* Remova essa linha */
+  /* margin: 1em 0;*/
+}
+
 /* Button */
 #controls {
   display: flex;

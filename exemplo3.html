@@ -57,8 +57,7 @@
         <li>
             Equação constitutiva para o tensor de tensões \( \mathbf{T} \):
             <div>\[
-            \mathbf{T} = \mathbb{C}[\mathbf{E}_e] = 
-            \lambda (\mathrm{tr} \mathbf{E}_e)\mathbf{I} + 2\mu \mathbf{E}_e = 
+            \mathbf{T} = \lambda (\mathrm{tr} \mathbf{E}_e)\mathbf{I} + 2\mu \mathbf{E}_e = 
             \lambda (\mathrm{tr} \mathbf{E})\mathbf{I} + 2\mu \mathbf{E}
             - \alpha(3\lambda + 2\mu)\triangle \vartheta\mathbf{I}
             \]</div>
@@ -139,6 +138,7 @@
             <p>onde \(C_1\) e \(C_2\) são constantes de integração a serem determinadas.</p>
 
         <li>Substituindo \(u(r)\) na equação constitutiva e agrupando os termos:</li>
+            <div class="math-container">
             \[
             \left\{
             \begin{aligned}
@@ -148,15 +148,20 @@
             \end{aligned}
             \right.
             \]
+            </div>
+
             <p>onde \( A \) e \( B \) são constantes a serem determinadas, \( E \) é o módulo de Young e \( \nu \) é a razão de Poisson do material.</p>    
 
         <li> Aplicando as condições de contorno \(\sigma_r(a) = 0\) e \(\sigma_r(b) = 0\) e resolvendo para as constantes:</li>
+            <div class="math-container">
             \[
             A = \frac{\alpha E}{(1-\nu)(b^2-a^2)} \int_a^b \triangle \vartheta(r^*) r^*\; dr^* \quad \text{e} \quad B = \frac{a^2 \alpha E}{(1-\nu)(b^2-a^2)} \int_a^b \triangle \vartheta(r^*) r^*\; dr^* 
             \]
+            </div>
 
             Portanto, as tensões são dadas por:
 
+            <div class="math-container">
             \[
             \left\{
                 \begin{aligned}
@@ -166,6 +171,7 @@
                 \end{aligned}
             \right.
             \]
+            </div>
 
             onde \(\delta = \vartheta_a-\vartheta_b\) é a diferença de temperatura entre as superfícices interna e externa.
     </ul>
