@@ -177,8 +177,8 @@
         ax.set_facecolor('none')
     
         try:
-            a = float(document.getElementById("a").value) / 1000
-            b = float(document.getElementById("b").value) / 1000
+            a = float(document.getElementById("a").value)
+            b = float(document.getElementById("b").value)
             omega = float(document.getElementById("omega").value)
             rho = float(document.getElementById("rho").value)
             nu = float(document.getElementById("nu").value)
@@ -212,19 +212,19 @@
         coeff = (3 + nu) / 8 * rho * omega**2
 
         if a == 0:
-            sigma_r = coeff * (b**2 - r**2) / 1e6
-            sigma_theta = coeff * (b**2 - ((1 + 3*nu) / (3 + nu)) * r**2) / 1e6       
+            sigma_r = coeff * (b**2 - r**2) / 1e12
+            sigma_theta = coeff * (b**2 - ((1 + 3*nu) / (3 + nu)) * r**2) / 1e12     
 
         else: 
-            sigma_r = coeff * (a**2 + b**2 - r**2 - (a**2 * b**2) / r**2) / 1e6
-            sigma_theta = coeff * (a**2 + b**2 - ((1 + 3*nu) / (3 + nu)) * r**2 + (a**2 * b**2) / r**2) / 1e6
+            sigma_r = coeff * (a**2 + b**2 - r**2 - (a**2 * b**2) / r**2) / 1e12
+            sigma_theta = coeff * (a**2 + b**2 - ((1 + 3*nu) / (3 + nu)) * r**2 + (a**2 * b**2) / r**2) / 1e12
             
-        sigma_z = np.zeros_like(r) / 1e6
+        sigma_z = np.zeros_like(r) / 1e12
    
         # Plot all stresses
         ax.plot(r, sigma_r, label=r"$\sigma_r$", color="royalblue")
         ax.plot(r, sigma_theta, label=r"$\sigma_\theta$", color="darkorange")
-        ax.plot(r, sigma_z, label=r"$\sigma_z$", color="green", linestyle="--")
+        ax.plot(r, sigma_z, label=r"$\sigma_z$", color="green")
 
         ax.set_xlabel("r [mm]")
         ax.set_ylabel("Tensão [MPa]")

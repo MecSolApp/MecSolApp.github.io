@@ -144,7 +144,7 @@
             \begin{aligned}
                 & \sigma_r(r) = A - \frac{B}{r^2} - \frac{\alpha E}{(1-\nu)r^2} \int_a^r \triangle \vartheta(r^*) r^*\; dr^*\\
                 & \sigma_\theta(r) = A + \frac{B}{r^2} + \frac{\alpha E}{(1-\nu)r^2} \int_a^r \triangle \vartheta(r^*) r^*\; dr^* -  \frac{\alpha E}{(1-\nu)} \triangle \vartheta\\
-                & \sigma_z(r) = ...
+                & \sigma_z(r) = 2 \nu A -  \frac{\alpha E}{(1-\nu)} \triangle \vartheta
             \end{aligned}
             \right.
             \]
@@ -167,7 +167,7 @@
                 \begin{aligned}
                 & \sigma_r(r) = \frac{\alpha E \delta}{2(1-\nu)\log\left(\frac{b}{a}\right)}\left[ - \log\left(\frac{b}{r}\right) - \frac{a^2(r^2-b^2)}{r^2(b^2-a^2)}\log\left(\frac{b}{a}\right) \right], \\
                 & \sigma_\theta(r) = \frac{\alpha E \delta}{2(1-\nu)\log\left(\frac{b}{a}\right)}\left[ 1 - \log\left(\frac{b}{r}\right) - \frac{a^2(r^2+b^2)}{r^2(b^2-a^2)}\log\left(\frac{b}{a}\right) \right],\\
-                & \sigma_z(r) = \frac{\alpha E \delta}{(1-\nu)\log\left(\frac{b}{a}\right)}\left[ \nu \left(\frac{1}{2}  - \frac{ a^2}{(b^2-a^2)}\log\left(\frac{b}{a}\right)\right) - (1+\nu)\log\left(\frac{b}{r}\right) \right].
+                & \sigma_z(r) = \frac{\alpha E \delta}{(1-\nu)\log\left(\frac{b}{a}\right)}\left[ \nu \left(\frac{1}{2}  - \frac{ a^2}{(b^2-a^2)}\log\left(\frac{b}{a}\right)\right) - \log\left(\frac{b}{r}\right) \right].
                 \end{aligned}
             \right.
             \]
@@ -260,13 +260,13 @@
 
         sigma_r = -factor*(np.log(b/r)+a**2*(r**2-b**2)*np.log(b/a)/(r**2*(b**2-a**2))) / 1e6
         sigma_theta = factor*(1-np.log(b/r)-a**2*(r**2+b**2)*np.log(b/a)/(r**2*(b**2-a**2))) / 1e6
-        sigma_z = -2*factor*(nu*(1/2+(a**2)*np.log(b/a)/(b**2-a**2))+np.log(b/r)) / 1e6
+        sigma_z = 2*factor*(nu*(1/2 - (a**2)*np.log(b/a)/(b**2-a**2)) - np.log(b/r)) / 1e6
     
 
         # Plot all stresses
         ax.plot(r, sigma_r, label=r"$\sigma_r$", color="royalblue")
         ax.plot(r, sigma_theta, label=r"$\sigma_\theta$", color="darkorange")
-        ax.plot(r, sigma_z, label=r"$\sigma_z$", color="green", linestyle="--")
+        ax.plot(r, sigma_z, label=r"$\sigma_z$", color="green")
 
         ax.set_xlabel("r [mm]")
         ax.set_ylabel("Tensão [MPa]")
