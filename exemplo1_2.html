@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Latex -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- PyScript -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+    
+    <title>Mecânica dos Sólidos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Mecânica dos Sólidos</h1>
+        <h2><span class="underline">Fernando P. Duda</span> e <span class="underline">Francisco S. Forte Neto</span></h2>
+    </header>
+
+    <nav>
+        <ul>
+            <li>
+                <a href="index.html"> Menu principal </a>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>Tubo de parede grossa</h2>
+
+        <h3>Considerações:</h3>
+
+        <ul>    
+            <li>Estado plano de deformação (Caso 2)</li>
+            <li>Condições de contorno:</li>
+            <ul>
+                <li>Pressão interna \(p_i\) e pressão externa \(p_e\)</li>
+            </ul>
+
+            <li> Forças de corpo: </li> 
+            <ul>
+                <li>\(\mathbf{b}=\mathbf{0}\)</li>
+            </ul>
+        </ul>
+
+    <h3>Consequências das hipóteses adotadas</h4>
+
+    <li>Relações constitutivas:
+        \[
+        \left\{
+        \begin{array}{l}
+            \sigma_r = \lambda \left(\frac{d u}{d r} + \frac{u}{r}  \right) + 2 \mu\frac{d u}{d r}\\
+            \sigma_\theta = \lambda \left(\frac{d u}{d r} + \frac{u}{r} \right) + 2 \mu\frac{u}{ r} \\
+            \sigma_z = \lambda \left(\frac{d u}{d r} + \frac{u}{r}  \right)
+        \end{array}
+        \right.
+        \]
+    </li>
+
+    <li>Das equações de equilíbrio na ausência de forças de corpo:
+        \[
+            \frac{d \sigma_r}{d r}  + \frac{\sigma_r-\sigma_\theta}{r} = 0 \implies \frac{d}{d r}\left(\frac{1}{r}\frac{d}{d r}\left({u}{r}\right)\right)=0
+        \]
+    </li>
+
+    </li>
+
+    <li>Condições de contorno:
+        <ul>
+        <li>Superfície interna \( r=a \):
+            \[
+            \mathbf{T}\mathbf{n}=- p_i\mathbf{n}, \quad \mathbf{n}=-\mathbf{e}_r  \implies \sigma_r(a) = -p_i
+            \]
+        </li>
+        <li>Superfície externa \( r=b \):
+            \[
+            \mathbf{T}\mathbf{n}=- p_e\mathbf{n}, \quad \mathbf{n}=\mathbf{e}_r \implies \sigma_r(b) = -p_e
+            \]
+        </li>
+        </ul>
+    </li>
+    </ul>
+
+    <h3>Solução das equações</h3>
+
+    <ul>
+        <li>Resolvendo a equação de equilíbrio para o deslocamento:</li>
+            \[
+                u(r) = C_1 r + \frac{C_2}{r}
+            \]
+            <p>onde \(C_1\) e \(C_2\) são constantes de integração a serem determinadas.</p>
+
+        <li>Substituindo \(u(r)\) na equação constitutiva e agrupando os termos:</li>
+            \[
+            \sigma_r(r) = A - \dfrac{B}{r^2}, \quad \sigma_\theta(r) = A + \dfrac{B}{r^2} \quad\text{e}\quad \sigma_z(r) = 2 \nu A
+            \]
+            <p>onde \( A \) e \( B \) são constantes a serem determinadas e \( \nu \) é a razão de Poisson do material.</p>    
+
+        <li> Aplicando as condições de contorno \(\sigma_r(a) = -p_i\) e \(\sigma_r(b) = -p_e\) e resolvendo para as constantes:</li>
+            \[
+            A = \frac{a^2 p_i - b^2 p_e}{b^2 - a^2} \quad \text{e} \quad B = \frac{a^2 b^2 (p_i - p_e)}{b^2 - a^2}
+            \]
+
+            Portanto, as tensões são dadas por:
+
+            \[
+            \left\{
+                \begin{aligned}
+                & \sigma_r(r) = \frac{a^2 p_i - b^2 p_e}{b^2 - a^2} - \frac{a^2 b^2 (p_i - p_e)}{r^2(b^2 - a^2)}, \\
+                & \sigma_\theta(r) = \frac{a^2 p_i - b^2 p_e}{b^2 - a^2} + \frac{a^2 b^2 (p_i - p_e)}{r^2(b^2 - a^2)},\\
+                & \sigma_z(r) = \frac{2 \nu  (a^2 p_i - b^2 p_e)}{b^2 - a^2}.
+                \end{aligned}
+            \right.
+            \]
+    </ul>
+
+    <h3>Gráfico das tensões</h3>
+
+    <div id="controls">
+        <label for="a">\(a\) [mm]:</label>
+        <input type="number" id="a" value="100" step="1">
+
+        <label for="b">\(b\) [mm]:</label>
+        <input type="number" id="b" value="200" step="1">
+
+        <label for="p_i">\(p_i\) [Mpa]:</label>
+        <input type="number" id="p_i" value="100" step="1">
+
+        <label for="p_e">\(p_e\) [MPa]:</label>
+        <input type="number" id="p_e" value="0" step="1">
+
+        <label for="nu">\(\nu\):</label>
+        <input type="number" id="nu" value="0.3" step="0.01">
+
+        <button py-click="update">Plot</button>
+    </div>
+
+    <div id="plot"></div>
+    <div id="plot2"></div>
+
+    <div id="controls2">
+
+        <label for="r_mohr">Raio para Mohr [mm]:</label>
+        <input type="number" id="r_mohr" value="150" step="1">
+
+        <button py-click="update_mohr">Plot</button>
+    </div>
+
+    <div id="plot3"></div>
+    
+    <div id="output" style="color: red; margin-bottom: 1em;"></div>
+
+    <py-config>
+        packages = ["numpy", "matplotlib"]
+    </py-config>
+    
+    <py-script>
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from js import document
+    from pyscript import display
+
+    def update(*args):
+
+        plt.close('all')
+
+        # Clear previous plot and messages
+        document.getElementById("plot").innerHTML = ""
+        document.getElementById("plot2").innerHTML = ""
+        document.getElementById("plot3").innerHTML = ""
+        document.getElementById("output").innerText = ""
+    
+        fig, ax = plt.subplots(facecolor='none')
+        ax.set_facecolor('none')
+    
+        try:
+            a = float(document.getElementById("a").value)
+            b = float(document.getElementById("b").value)
+            p_i = float(document.getElementById("p_i").value)
+            p_e = float(document.getElementById("p_e").value)
+            nu = float(document.getElementById("nu").value)
+            r_sel = float(document.getElementById("r_mohr").value)
+        except Exception as e:
+            document.getElementById("output").innerText = "Por favor, insira valores numéricos válidos."
+            return
+    
+        # Validation checks
+        if a < 0:
+            document.getElementById("output").innerText = "Valor inválido para o raio interno."
+            return
+    
+        if b < 0:
+            document.getElementById("output").innerText = "Valor inválido para o raio externo."
+            return
+    
+        if a >= b:
+            document.getElementById("output").innerText = "O raio interno precisa ser menor que o externo."
+            return
+
+        if (nu < 0) or (nu >= 0.5):
+            document.getElementById("output").innerHTML = "Razão de Poisson fora dos valores aceitáveis [0, 0.5)."
+            return
+
+        r = np.linspace(a, b, 300)
+    
+        if a == 0:
+            sigma_r = np.full_like(r, -p_e)     
+            sigma_theta = np.full_like(r, -p_e)     
+            sigma_z = np.full_like(r, -2*nu*p_e)           
+
+        else: 
+            denom = b**2 - a**2
+            C1 = (a**2 * p_i - b**2 * p_e) / denom
+            C2 = (a**2 * b**2 * (p_i - p_e)) / denom
+        
+            sigma_r = C1 - C2 / r**2
+            sigma_theta = C1 + C2 / r**2
+            sigma_z = np.full_like(r, 2*nu*C1)
+
+        
+        sigma_vm = np.sqrt(0.5 * (
+            (sigma_r - sigma_theta)**2 +
+            (sigma_theta - sigma_z)**2 +
+            (sigma_z - sigma_r)**2
+        ))
+
+        sigma_tresca = np.maximum.reduce([
+            np.abs(sigma_r - sigma_theta),
+            np.abs(sigma_theta - sigma_z),
+            np.abs(sigma_z - sigma_r)
+        ])
+
+        # Set axis limits to include all stresses with padding
+        ymin = min(sigma_r.min(), sigma_theta.min(), sigma_z.min())
+        ymax = max(sigma_r.max(), sigma_theta.max(), sigma_z.max())
+        padding_y = 0.05 * (ymax - ymin) if ymax != ymin else 1
+
+        # -------- First plot (all stresses) --------
+        fig1, ax1 = plt.subplots(facecolor='none')
+        ax1.set_facecolor('none')
+
+        ax1.plot(r, sigma_r, label=r"$\sigma_r$")
+        ax1.plot(r, sigma_theta, label=r"$\sigma_\theta$")
+        ax1.plot(r, sigma_z, label=r"$\sigma_z$")
+
+        ax1.set_xlabel("r [mm]")
+        ax1.set_ylabel("Tensão [MPa]")
+        ax1.legend()
+        ax1.grid(True)
+
+        ax1.set_ylim(ymin - padding_y, ymax + padding_y)
+        ax1.set_xlim(a, b)
+
+        display(fig1, target="plot")
+
+        # -------- Second plot (example: Von Mises e Tresca) --------
+        fig2, ax2 = plt.subplots(facecolor='none')
+        ax2.set_facecolor('none')
+
+        ax2.plot(r, sigma_vm, label="Von Mises")
+        ax2.plot(r, sigma_tresca, label="Tresca")
+
+        ax2.set_xlabel("r [mm]")
+        ax2.set_ylabel("Tensão equivalente [MPa]")
+        ax2.legend()
+        ax2.grid(True)
+
+        ax2.set_xlim(a, b)
+
+        display(fig2, target="plot2")
+
+    update()
+
+    def update_mohr(*args):
+
+        plt.close('all')
+        document.getElementById("plot3").innerHTML = ""
+        document.getElementById("output").innerText = ""
+
+        try:
+            a = float(document.getElementById("a").value)
+            b = float(document.getElementById("b").value)
+            p_i = float(document.getElementById("p_i").value)
+            p_e = float(document.getElementById("p_e").value)
+            nu = float(document.getElementById("nu").value)
+            r_sel = float(document.getElementById("r_mohr").value)
+        except:
+            return
+
+        if (r_sel < a) or (r_sel > b):
+            document.getElementById("output").innerText = "Escolha um raio entre a e b."
+            return
+
+        if a == 0:
+            sr = -p_e
+            st = -p_e  
+            sz = -2*nu*p_e 
+
+        else: 
+            denom = b**2 - a**2
+            C1 = (a**2 * p_i - b**2 * p_e) / denom
+            C2 = (a**2 * b**2 * (p_i - p_e)) / denom
+
+            sr = C1 - C2 / r_sel**2
+            st = C1 + C2 / r_sel**2
+            sz = 2 * nu * C1
+
+        s1, s2, s3 = sorted([sr, st, sz], reverse=True)
+    
+        fig3, ax3 = plt.subplots(facecolor='none')
+        ax3.set_facecolor('none')
+
+        theta = np.linspace(0, 2*np.pi, 200)
+
+        def circle(sa, sb):
+            c = 0.5*(sa + sb)
+            R = 0.5*abs(sa - sb)
+            x = c + R*np.cos(theta)
+            y = R*np.sin(theta)
+            ax3.plot(x, y, 'k')
+
+        circle(s1, s2)
+        circle(s2, s3)
+        circle(s1, s3)
+
+        ax3.plot([s1, s2, s3], [0,0,0], 'ro')
+
+        #ax3.axhline(0, linewidth=1)
+        #ax3.axvline(0, linewidth=1)
+
+        ax3.set_aspect('equal')
+
+        ax3.set_xlabel("Tensão normal [MPa]")
+        ax3.set_ylabel("Tensão cisalhante [MPa]")
+        ax3.grid(True)
+
+        display(fig3, target="plot3")
+        #plt.close(fig)
+    
+    update_mohr()
+    </py-script>
+    
+    <footer style="text-align: center; margin: 20px; font-size: 0.9em; color: #555;">
+        <a href="index.html" style="text-decoration: none; color: #007acc;">&larr; Voltar para a página principal</a>
+    </footer>
+
+    </main>
+</body>
+</html>

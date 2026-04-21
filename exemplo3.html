@@ -17,7 +17,7 @@
 <body>
     <header>
         <h1>Mecânica dos Sólidos</h1>
-        <h2>Prof. Fernando Duda</h2>
+        <h2><span class="underline">Fernando P. Duda</span> e <span class="underline">Francisco S. Forte Neto</span></h2>
     </header>
 
     <nav>
@@ -96,8 +96,8 @@
         \[
         \left\{
         \begin{aligned}
-            & \sigma_r = \lambda \left(\frac{d u}{d r} + \frac{u}{r}  \right) + 2 G\frac{d u}{d r} - \alpha(3\lambda + 2G)\triangle \vartheta\\
-            & \sigma_\theta = \lambda \left(\frac{d u}{d r} + \frac{u}{r} \right) + 2 G\frac{u}{ r} - \alpha(3\lambda + 2G)\triangle \vartheta\\
+            & \sigma_r = \lambda \left(\frac{d u}{d r} + \frac{u}{r}  \right) + 2 \mu\frac{d u}{d r} - \alpha(3\lambda + 2G)\triangle \vartheta\\
+            & \sigma_\theta = \lambda \left(\frac{d u}{d r} + \frac{u}{r} \right) + 2 \mu\frac{u}{ r} - \alpha(3\lambda + 2G)\triangle \vartheta\\
             & \sigma_z = \lambda \left(\frac{d u}{d r} + \frac{u}{r}  \right) - \alpha(3\lambda + 2G)\triangle \vartheta
         \end{aligned}
         \right.
@@ -201,6 +201,17 @@
     </div>
 
     <div id="plot"></div>
+    <div id="plot2"></div>
+
+    <div id="controls2">
+
+        <label for="r_mohr">Entre com um raio para o Círuclo de Mohr [mm]:</label>
+        <input type="number" id="r_mohr" value="150" step="1">
+
+        <button py-click="update_mohr">Plot</button>
+    </div>
+
+    <div id="plot3"></div>
     
     <div id="output" style="color: red; margin-bottom: 1em;"></div>
 
@@ -215,8 +226,13 @@
     from pyscript import display
     
     def update(*args):
+    
+        plt.close('all')
+
         # Clear previous plot and messages
         document.getElementById("plot").innerHTML = ""
+        document.getElementById("plot2").innerHTML = ""
+        document.getElementById("plot3").innerHTML = ""
         document.getElementById("output").innerText = ""
     
         fig, ax = plt.subplots(facecolor='none')
@@ -262,27 +278,119 @@
         sigma_theta = factor*(1-np.log(b/r)-a**2*(r**2+b**2)*np.log(b/a)/(r**2*(b**2-a**2))) / 1e6
         sigma_z = 2*factor*(nu*(1/2 - (a**2)*np.log(b/a)/(b**2-a**2)) - np.log(b/r)) / 1e6
     
+        sigma_vm = np.sqrt(0.5 * (
+            (sigma_r - sigma_theta)**2 +
+            (sigma_theta - sigma_z)**2 +
+            (sigma_z - sigma_r)**2
+        ))
 
-        # Plot all stresses
-        ax.plot(r, sigma_r, label=r"$\sigma_r$", color="royalblue")
-        ax.plot(r, sigma_theta, label=r"$\sigma_\theta$", color="darkorange")
-        ax.plot(r, sigma_z, label=r"$\sigma_z$", color="green")
+        sigma_tresca = np.maximum.reduce([
+            np.abs(sigma_r - sigma_theta),
+            np.abs(sigma_theta - sigma_z),
+            np.abs(sigma_z - sigma_r)
+        ])
 
-        ax.set_xlabel("r [mm]")
-        ax.set_ylabel("Tensão [MPa]")
-        ax.legend()
-        ax.grid(True)
-    
         # Set axis limits to include all stresses with padding
         ymin = min(sigma_r.min(), sigma_theta.min(), sigma_z.min())
         ymax = max(sigma_r.max(), sigma_theta.max(), sigma_z.max())
         padding_y = 0.05 * (ymax - ymin) if ymax != ymin else 1
-        ax.set_ylim(ymin - padding_y, ymax + padding_y)
-        ax.set_xlim(a, b)
-    
-        display(fig, target="plot")
-    
+
+        # -------- First plot (all stresses) --------
+        fig1, ax1 = plt.subplots(facecolor='none')
+        ax1.set_facecolor('none')
+
+        ax1.plot(r, sigma_r, label=r"$\sigma_r$")
+        ax1.plot(r, sigma_theta, label=r"$\sigma_\theta$")
+        ax1.plot(r, sigma_z, label=r"$\sigma_z$")
+
+        ax1.set_xlabel("r [mm]")
+        ax1.set_ylabel("Tensão [MPa]")
+        ax1.legend()
+        ax1.grid(True)
+
+        ax1.set_ylim(ymin - padding_y, ymax + padding_y)
+        ax1.set_xlim(a, b)
+
+        display(fig1, target="plot")
+
+        # -------- Second plot (example: Von Mises e Tresca) --------
+        fig2, ax2 = plt.subplots(facecolor='none')
+        ax2.set_facecolor('none')
+
+        ax2.plot(r, sigma_vm, label="Von Mises")
+        ax2.plot(r, sigma_tresca, label="Tresca")
+
+        ax2.set_xlabel("r [mm]")
+        ax2.set_ylabel("Tensão equivalente [MPa]")
+        ax2.legend()
+        ax2.grid(True)
+
+        ax2.set_xlim(a, b)
+
+        display(fig2, target="plot2")
+
     update()
+	
+    def update_mohr(*args):
+
+        plt.close('all')
+        document.getElementById("plot3").innerHTML = ""
+        document.getElementById("output").innerText = ""
+
+        try:
+            a = float(document.getElementById("a").value)
+            b = float(document.getElementById("b").value)
+            delta = float(document.getElementById("delta").value)
+            alpha = float(document.getElementById("alpha").value)
+            E = float(document.getElementById("E").value) * 1e9
+            nu = float(document.getElementById("nu").value)
+            r_sel = float(document.getElementById("r_mohr").value)
+        except:
+            return
+
+        if (r_sel < a) or (r_sel > b):
+            document.getElementById("output").innerText = "Escolha um raio entre a e b."
+            return
+
+        factor = alpha*E*delta/(2*(1-nu)*np.log(b/a))
+
+        sr = -factor*(np.log(b/r_sel)+a**2*(r_sel**2-b**2)*np.log(b/a)/(r_sel**2*(b**2-a**2))) / 1e6
+        st = factor*(1-np.log(b/r_sel)-a**2*(r_sel**2+b**2)*np.log(b/a)/(r_sel**2*(b**2-a**2))) / 1e6
+        sz = 2*factor*(nu*(1/2 - (a**2)*np.log(b/a)/(b**2-a**2)) - np.log(b/r_sel)) / 1e6
+
+        s1, s2, s3 = sorted([sr, st, sz], reverse=True)
+    
+        fig3, ax3 = plt.subplots(facecolor='none')
+        ax3.set_facecolor('none')
+
+        theta = np.linspace(0, 2*np.pi, 200)
+
+        def circle(sa, sb):
+            c = 0.5*(sa + sb)
+            R = 0.5*abs(sa - sb)
+            x = c + R*np.cos(theta)
+            y = R*np.sin(theta)
+            ax3.plot(x, y, 'k')
+
+        circle(s1, s2)
+        circle(s2, s3)
+        circle(s1, s3)
+
+        ax3.plot([s1, s2, s3], [0,0,0], 'ro')
+
+        #ax3.axhline(0, linewidth=1)
+        #ax3.axvline(0, linewidth=1)
+
+        ax3.set_aspect('equal')
+
+        ax3.set_xlabel("Tensão normal [MPa]")
+        ax3.set_ylabel("Tensão cisalhante [MPa]")
+        ax3.grid(True)
+
+        display(fig3, target="plot3")
+        #plt.close(fig)
+    
+    update_mohr()		
     </py-script>
     
     <footer style="text-align: center; margin: 20px; font-size: 0.9em; color: #555;">

@@ -96,6 +96,10 @@ main li {
   margin-bottom: 0.3em;
 }
 
+.underline {
+  text-decoration: underline;
+}
+
 /* Equações grandes */
 .math-container {
   overflow-x: auto;
@@ -130,8 +134,30 @@ main li {
   cursor: pointer;
 }
 
+#controls2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 15px; /* space between elements */
+  margin-top: 60px;
+  margin-bottom: 0px;
+}
+
+#controls2 input {
+  width: 60px;
+  padding: 1px;
+  font-size: 1rem;
+}
+
+#controls2 button {
+  padding: 1px 12px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
 /* Plot */
-#plot {
+#plot, #plot2, #plot3 {
   max-width: 100%;     /* limit container width to viewport */
   width: 100%;         /* take full width available */
   overflow-x: auto;    /* horizontal scroll if needed */
@@ -141,7 +167,7 @@ main li {
 }
 
 /* Make matplotlib figure images responsive */
-#plot img {
+#plot img, #plot2 img, #plot3 img {
   max-width: 100% !important;  /* never overflow container */
   height: auto !important;     /* keep aspect ratio */
   display: block;
